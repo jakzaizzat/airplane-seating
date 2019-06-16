@@ -1,36 +1,60 @@
-var method = require("./test-node");
+var method = require("./method");
 
-// Output
-// Mapping function
+var fs = require("fs");
 
-var arrSeats = [[2, 3], [3, 4], [3, 2], [4, 3]];
-var passengers = 30;
+try {
+  fs.readFile("input.txt", "utf-8", (err, file) => {
+    const lines = file.split("\n");
 
-var lane = arrSeats.length;
+    // Validate 2D Array Seats
+    var seatsTest = method.validate2dArray(lines[0]);
+    if (!seatsTest.status) {
+      console.log(seatsTest.message);
+      return;
+    }
 
-var passengersStarting = 1;
-var maxRow = 0;
+    var arrSeats = seatsTest.data;
 
-// Draw the seats first
+    // Validate Passenger
+    var passengersTest = method.validatePassenger(lines[1]);
+    if (!passengersTest.status) {
+      console.log(passengersTest.message);
+      return;
+    }
+    var passengers = passengersTest.data;
 
-var drawResult = method.drawSeats(arrSeats, maxRow);
-
-drawSeatsArr = drawResult.drawSeatsArr;
-maxRow = drawResult.maxRow;
-
-//console.log(drawSeatsArr);
-var nameArr = ["Aisle", "Window", "Middle"];
-
-var params = {
-  arrSeats: arrSeats,
-  passengers: passengers,
-  passengersStarting: 1,
-  maxRow: maxRow
-};
-for (var i = 0; i < nameArr.length; i++) {
-  var result = method.assignPassenger(nameArr[i], drawSeatsArr, params);
-  params = result.params;
-  drawSeatsArr = result.drawSeatsArr;
+    // Run main function
+    execute(arrSeats, passengers);
+  });
+} catch (err) {
+  console.log("Message: ", err.stack);
 }
 
-method.drawFinalResult(drawSeatsArr, arrSeats);
+function execute(arrSeats, passengers) {
+  var lane = arrSeats.length;
+
+  var passengersStarting = 1;
+  var maxRow = 0;
+
+  var nameArr = ["Aisle", "Window", "Middle"];
+
+  // Draw the seats first
+  var drawResult = method.drawSeats(arrSeats, maxRow);
+
+  drawSeatsArr = drawResult.drawSeatsArr;
+  maxRow = drawResult.maxRow;
+
+  var params = {
+    arrSeats: arrSeats,
+    passengers: passengers,
+    passengersStarting: 1,
+    maxRow: maxRow
+  };
+  for (var i = 0; i < nameArr.length; i++) {
+    var result = method.assignPassenger(nameArr[i], drawSeatsArr, params);
+    params = result.params;
+    drawSeatsArr = result.drawSeatsArr;
+  }
+
+  method.drawFinalResult(drawSeatsArr, arrSeats);
+}

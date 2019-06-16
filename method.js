@@ -1,4 +1,35 @@
 module.exports = {
+  validate2dArray: function(array) {
+    var result = {
+      status: true,
+      data: "",
+      message: ""
+    };
+    result.data = array.replace(/'/g, '"');
+
+    try {
+      result.data = JSON.parse(result.data);
+    } catch (e) {
+      result.status = false;
+      result.message = "invalid 2D Array";
+    }
+
+    return result;
+  },
+  validatePassenger: function(passengers) {
+    var result = {
+      status: true,
+      message: "",
+      data: ""
+    };
+    if (isNaN(passengers) || passengers % 1 !== 0) {
+      result.status = false;
+      result.message = "Number of passenger is not valid";
+    } else {
+      result.data = parseInt(passengers);
+    }
+    return result;
+  },
   drawSeats: function(arrSeats, maxRow) {
     var lane = arrSeats.length;
 

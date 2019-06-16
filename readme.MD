@@ -1,5 +1,4 @@
 # Airplane Seating Algorithm
----
 
 ## Tech Spec
 * NodeJS

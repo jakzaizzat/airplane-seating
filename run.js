@@ -33,4 +33,4 @@ for (var i = 0; i < nameArr.length; i++) {
   drawSeatsArr = result.drawSeatsArr;
 }
 
-console.log(drawSeatsArr);
+method.drawFinalResult(drawSeatsArr, arrSeats);

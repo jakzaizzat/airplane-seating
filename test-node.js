@@ -80,5 +80,24 @@ module.exports = {
       params: params
     };
     return result;
+  },
+
+  drawFinalResult: function(drawSeatsArr, arrSeats) {
+    console.log("\nOutput lane from left to right\n");
+
+    arrSeats.forEach((lane, index) => {
+      var eachLane = "";
+      var starting = 0;
+      for (var row = 0; row < lane[0]; row++) {
+        for (var col = 0; col < lane[1]; col++) {
+          eachLane += drawSeatsArr[index][starting] + "\t";
+          starting++;
+        }
+        eachLane += "\n";
+      }
+
+      console.log(eachLane);
+    });
+    return drawSeatsArr;
   }
 };

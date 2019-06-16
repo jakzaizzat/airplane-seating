@@ -19,3 +19,8 @@ node run.js
 mocha
 ```
 
+## Input
+
+Fill in the input.txt file with 2D array in the first line and no. of passenger in 2nd line. 
+
+

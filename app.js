@@ -70,7 +70,5 @@ function execute(arrSeats, passengers) {
     drawSeatsArr = result.drawSeatsArr;
   }
 
-  //return drawSeatsArr;
-
   return method.drawFinalResult(drawSeatsArr, arrSeats);
 }

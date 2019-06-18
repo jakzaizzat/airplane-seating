@@ -93,7 +93,7 @@ module.exports = {
 
           if (indexFound && !changeLane) {
             drawSeatsArr[index][indexFound - 1] = params.passengersStarting;
-            if (params.passengersStarting < 30) {
+            if (params.passengersStarting < params.passengers) {
               params.passengersStarting++;
             } else {
               params.passengersStarting = "x";
@@ -114,21 +114,20 @@ module.exports = {
   },
 
   drawFinalResult: function(drawSeatsArr, arrSeats) {
-    console.log("\nOutput lane from left to right\n");
-
+    var lanes = [];
     arrSeats.forEach((lane, index) => {
-      var eachLane = "";
+      var laneObj = {};
       var starting = 0;
       for (var row = 0; row < lane[0]; row++) {
+        var tempArr = [];
         for (var col = 0; col < lane[1]; col++) {
-          eachLane += drawSeatsArr[index][starting] + "\t";
+          tempArr.push(drawSeatsArr[index][starting]);
           starting++;
         }
-        eachLane += "\n";
+        laneObj[row] = tempArr;
       }
-
-      console.log(eachLane);
+      lanes.push(laneObj);
     });
-    return drawSeatsArr;
+    return lanes;
   }
 };

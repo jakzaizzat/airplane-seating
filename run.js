@@ -1,34 +1,48 @@
 var method = require("./method");
-
 var fs = require("fs");
 
-try {
-  fs.readFile("input.txt", "utf-8", (err, file) => {
-    const lines = file.split("\n");
+var express = require("express");
+var port = process.env.PORT || 3001;
 
-    // Validate 2D Array Seats
-    var seatsTest = method.validate2dArray(lines[0]);
-    if (!seatsTest.status) {
-      console.log(seatsTest.message);
-      return;
-    }
+var app = express();
 
-    var arrSeats = seatsTest.data;
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+app.use(express.json());
 
-    // Validate Passenger
-    var passengersTest = method.validatePassenger(lines[1]);
-    if (!passengersTest.status) {
-      console.log(passengersTest.message);
-      return;
-    }
-    var passengers = passengersTest.data;
+app.listen(port, function() {
+  console.log("Example app listening on port !");
+});
 
-    // Run main function
-    execute(arrSeats, passengers);
-  });
-} catch (err) {
-  console.log("Message: ", err.stack);
-}
+app.post("/", function(req, res) {
+  // Validate Passenger
+  var passengersTest = method.validatePassenger(req.body.passengers);
+  if (!passengersTest.status) {
+    res.send(passengersTest.message);
+    return;
+  }
+
+  var passengers = passengersTest.data;
+
+  // Validate 2D Array Seats
+  var seatsTest = method.validate2dArray(req.body.array);
+  if (!seatsTest.status) {
+    res.send(seatsTest.message);
+    return;
+  }
+
+  var arrSeats = seatsTest.data;
+
+  var result = execute(arrSeats, passengers);
+
+  res.send(result);
+});
 
 function execute(arrSeats, passengers) {
   var lane = arrSeats.length;
@@ -56,5 +70,7 @@ function execute(arrSeats, passengers) {
     drawSeatsArr = result.drawSeatsArr;
   }
 
-  method.drawFinalResult(drawSeatsArr, arrSeats);
+  //return drawSeatsArr;
+
+  return method.drawFinalResult(drawSeatsArr, arrSeats);
 }

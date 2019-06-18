@@ -4,6 +4,8 @@
 * NodeJS
 * Mocha JS
 * Chai
+* Express
+* Expresjs
 
 ## Build Setup
 
@@ -21,6 +23,6 @@ mocha
 
 ## Input
 
-Fill in the **input.txt** file with **2D array** in the first line and **no. of passenger** in 2nd line. 
+Algorithm can be test at (https://armillary-airplane.netlify.com/)[https://armillary-airplane.netlify.com/]
 
-
+It accepts passengers **(Integer)** and Seats **(2D Array)**
